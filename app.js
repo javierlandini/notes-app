@@ -34,4 +34,12 @@ yargs
       function(argv) {
         notes.removeNote(argv.title);
       },
-  ).argv;
+  )
+  .command(
+    'list',
+    'List all the notes',
+    {},
+    function(argv) {
+      notes.listNotes();
+    },
+).argv;

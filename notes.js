@@ -12,6 +12,10 @@ const getNotes = ()  => {
     }
 }
 
+const saveNotes = (notes) => {
+    fs.writeFileSync('notes.json', notes);
+}
+
 const addNote = (title, body) => {
     const notes = getNotes();
     const duplicateNotes = notes.filter((note) => note.title === title);
@@ -42,12 +46,22 @@ const removeNote = (title) => {
     console.log(chalk.green.inverse('Note removed! ' + title));
 }
 
-const saveNotes = (notes) => {
-    fs.writeFileSync('notes.json', notes);
+const listNotes = () => {
+    const notes = getNotes();
+    if (notes.length) {
+        console.log(chalk.bold.blue.inverse('Your notes:'));
+        notes.forEach(note => {
+            console.log(chalk.white('  ' + note.title));
+        });
+    }
+    else {
+        console.log(chalk.red.inverse('No notes found.'));
+    }
+
 }
 
 module.exports = {
-    getNotes,
+    listNotes,
     addNote,
     removeNote,
 }

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const chalk = require('chalk');
 
 const getNotes = function () {
     try {
@@ -17,7 +18,7 @@ const addNote = function(title, body) {
         return note.title === title;
     });
     if (duplicateNotes.length) {
-        console.log('Error: Title "' + title + '" already taken!');
+        console.log(chalk.red.inverse('Error: Title "' + title + '" already taken!'));
         return;
     }
 
@@ -26,11 +27,21 @@ const addNote = function(title, body) {
         body: body,
     });
     saveNotes(JSON.stringify(notes));
-    console.log('Note added!');
+    console.log(chalk.green.inverse('Note added!'));
 }
 
 const removeNote = function(title) {
-    console.log('Note removed!');
+    const notes = getNotes();
+    // Let's keep just the notes that don't match with the title provided.
+    const newNotes = notes.filter((note) =>  {return note.title !== title})
+
+    if (newNotes.length === notes.length) {
+        console.log(chalk.red.inverse('Error: Note "' + title + '" not found.'));
+        return;
+    }
+
+    saveNotes(JSON.stringify(newNotes));
+    console.log(chalk.green.inverse('Note removed! ' + title));
 }
 
 const saveNotes = function(notes) {

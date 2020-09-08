@@ -24,8 +24,14 @@ yargs
   .command(
       'remove',
       'Remove a note',
-      {},
+      {
+        title: {
+          describe: 'Title of the note to remove',
+          require: true,
+          type: 'string',
+        },
+      },
       function(argv) {
-        console.log('Note removed!');
+        notes.removeNote(argv.title);
       },
   ).argv;

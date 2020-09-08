@@ -36,6 +36,20 @@ yargs
       },
   )
   .command(
+    'read',
+    'Read a note',
+    {
+      title: {
+        describe: 'Title of the note to read',
+        require: true,
+        type: 'string',
+      },
+    },
+    function(argv) {
+      notes.readNote(argv.title);
+    },
+  )
+  .command(
     'list',
     'List all the notes',
     {},
